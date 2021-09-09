@@ -58,6 +58,7 @@ class Book extends \yii\db\ActiveRecord
         return [
             [['title'],'required'],
             [['title'], 'string', 'max' => 255],
+            [['authorIds'], 'required'],
         ];
     }
 

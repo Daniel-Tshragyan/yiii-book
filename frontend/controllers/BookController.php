@@ -72,7 +72,7 @@ class BookController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                foreach ($this->request->post()['Book']['authorIds'] as $item) {
+                foreach ($model->authorIds as $item) {
                     $model1 = new AuthorBook();
                     $model1->author_id = $item;
                     $model1->book_id = $model->id;
@@ -99,12 +99,11 @@ class BookController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $model->authorIds = $model->getAuthorIds();
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             foreach ($model->authorsBooks as $item) {
                 $item->delete();
             }
-            foreach ($this->request->post()['Book']['authorIds'] as $item) {
+            foreach ($model->authorIds as $item) {
                 $model1 = new AuthorBook();
                 $model1->author_id = $item;
                 $model1->book_id = $model->id;
